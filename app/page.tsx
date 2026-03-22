@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 // DOMAIN DETECTION
 // ─────────────────────────────────────────────────────────────
 
-function getDomain(idea) {
+function getDomain(idea: string) {
   const l = idea.toLowerCase();
   if (/logistic|transport|deliver|truck|fleet|freight|cargo|dispatch|shipping/.test(l)) return "logistics";
   if (/food|restaurant|tiffin|kitchen|catering|chef|dhaba|cafe|bakery|meal/.test(l)) return "food";
@@ -24,7 +24,7 @@ function getDomain(idea) {
   return "general";
 }
 
-function getStage(idea) {
+function getStage(idea: string) {
   const l = idea.toLowerCase();
   if (/scale|expand|all over india|pan india|franchise|multiple city|grow/.test(l)) return "scale";
   if (/revenue|earning|monetize|charge|paying|subscription/.test(l)) return "monetize";
@@ -556,7 +556,7 @@ const UNDERSTAND = {
   general: "You are building something. Talk to real people, move real money, fix one thing at a time.",
 };
 
-function getAnalysis(idea) {
+function getAnalysis(idea: string) {
   const domain = getDomain(idea);
   const stage = getStage(idea);
   const domainSteps = STEPS[domain] || STEPS.general;
@@ -1454,5 +1454,7 @@ export default function MicroMind() {
     </>
   );
 }
+
+
 
 
