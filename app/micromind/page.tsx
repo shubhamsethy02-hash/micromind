@@ -1,11 +1,11 @@
 "use client";
-
+ 
 import { useState, useEffect, useRef } from "react";
-
+ 
 // ─────────────────────────────────────────────────────────────
 // DOMAIN DETECTION
 // ─────────────────────────────────────────────────────────────
-
+ 
 function getDomain(idea: string) {
   const l = idea.toLowerCase();
   if (/logistic|transport|deliver|truck|fleet|freight|cargo|dispatch|shipping/.test(l)) return "logistics";
@@ -24,7 +24,7 @@ function getDomain(idea: string) {
   if (/app|saas|software|platform|tech|startup|founder|api|code|developer|ai tool/.test(l)) return "tech";
   return "general";
 }
-
+ 
 function getStage(idea: string) {
   const l = idea.toLowerCase();
   if (/scale|expand|all over india|pan india|franchise|multiple city|grow/.test(l)) return "scale";
@@ -33,12 +33,12 @@ function getStage(idea: string) {
   if (/build|develop|building|making|creating|coding|working on|mvp/.test(l)) return "build";
   return "validate";
 }
-
+ 
 // ─────────────────────────────────────────────────────────────
 // STEP ENGINE
 // Every step: action verb, under 10 minutes, no theory
 // ─────────────────────────────────────────────────────────────
-
+ 
 const STEPS = {
   logistics: {
     validate: [
@@ -67,7 +67,7 @@ const STEPS = {
     ],
     stuck: "Call one customer right now. Ask: what specifically went wrong last time? Write one word. Fix that.",
   },
-
+ 
   food: {
     validate: [
       "Cook your best dish. Give it to 5 people outside your family. Ask each: would you pay this price every week?",
@@ -94,7 +94,7 @@ const STEPS = {
     ],
     stuck: "Call your last 5 customers. Ask which one dish they would order every week. That dish is your business.",
   },
-
+ 
   realestate: {
     validate: [
       "Visit 3 properties in your target area today. Talk to owners. Ask: are you thinking of selling or renting?",
@@ -121,7 +121,7 @@ const STEPS = {
     ],
     stuck: "Call one property owner in your area right now. Just introduce yourself. Ask one question.",
   },
-
+ 
   education: {
     validate: [
       "Teach 3 students for free this week. At the end, ask each: would your parents pay this amount per month?",
@@ -148,7 +148,7 @@ const STEPS = {
     ],
     stuck: "Message one student who stopped coming. Ask: what made you stop? One message. Send it now.",
   },
-
+ 
   health: {
     validate: [
       "Talk to 5 people in your area about the health problem you solve. Ask only how they currently handle it.",
@@ -175,7 +175,7 @@ const STEPS = {
     ],
     stuck: "Call one client who stopped coming. Ask: what would have made you continue? One question.",
   },
-
+ 
   finance: {
     validate: [
       "Talk to 5 people today. Ask: if you could fix one financial problem right now, what would it be?",
@@ -202,7 +202,7 @@ const STEPS = {
     ],
     stuck: "Call one person in your network right now. Ask: are you happy with how your money is managed? Listen.",
   },
-
+ 
   fashion: {
     validate: [
       "Make 5 samples of your best design. Ask 10 target customers to try them. Count who offers to buy.",
@@ -229,7 +229,7 @@ const STEPS = {
     ],
     stuck: "Post your best product on your personal WhatsApp status with a price right now. See who asks.",
   },
-
+ 
   agriculture: {
     validate: [
       "Visit one local mandi this week. Ask 3 commission agents: what causes farmers the most loss here?",
@@ -256,7 +256,7 @@ const STEPS = {
     ],
     stuck: "Go to the field. Visit one farmer today. Everything unclear becomes clear in one real conversation.",
   },
-
+ 
   manufacturing: {
     validate: [
       "Visit 3 potential buyers this week. Ask each: what do you pay per unit and what is your monthly volume?",
@@ -283,7 +283,7 @@ const STEPS = {
     ],
     stuck: "Call your biggest buyer right now. Ask: what would make you double your monthly order?",
   },
-
+ 
   retail: {
     validate: [
       "Stand near your target location for 2 hours. Count people walking by. Ask 3: where do they shop for this?",
@@ -310,7 +310,7 @@ const STEPS = {
     ],
     stuck: "Ask the next 3 customers who walk in: is there anything you could not find here? Write the answers.",
   },
-
+ 
   creator: {
     validate: [
       "Look at your last 10 posts. Find the one with the most real engagement. Create only that type this month.",
@@ -337,7 +337,7 @@ const STEPS = {
     ],
     stuck: "Film a 60-second video right now about what you are building and why. Post it before watching it back.",
   },
-
+ 
   ecommerce: {
     validate: [
       "List your product on one marketplace today. Any listing. See if anyone clicks before you optimize.",
@@ -364,7 +364,7 @@ const STEPS = {
     ],
     stuck: "Message 5 people who would genuinely want this product. Send the link. See who clicks.",
   },
-
+ 
   agency: {
     validate: [
       "Write 3 cold outreach messages today, each specific to one business problem you can see publicly. Send all 3.",
@@ -391,7 +391,7 @@ const STEPS = {
     ],
     stuck: "Call one prospect you have not followed up with in 2 weeks. Ask: are you still looking for help?",
   },
-
+ 
   tech: {
     validate: [
       "Message 10 target users today. Ask only: how do you currently handle this problem? Watch what they say.",
@@ -418,7 +418,7 @@ const STEPS = {
     ],
     stuck: "Close the laptop. Text one real user right now: can I call you for 10 minutes? Do it now.",
   },
-
+ 
   general: {
     validate: [
       "Call 5 people who match your target customer. Ask only: how do you handle this problem right now?",
@@ -446,11 +446,11 @@ const STEPS = {
     stuck: "Pick up your phone. Call or message one real person who might need this. Have the conversation now.",
   },
 };
-
+ 
 // ─────────────────────────────────────────────────────────────
 // CORE ANALYSIS — returns understanding, bottleneck, steps, stuck
 // ─────────────────────────────────────────────────────────────
-
+ 
 const BOTTLENECKS = {
   validate: {
     logistics: "No confirmed client willing to pay before you invest in the operation.",
@@ -538,7 +538,7 @@ const BOTTLENECKS = {
     general: "Expanding before the core model is proven and documented.",
   },
 };
-
+ 
 const UNDERSTAND = {
   logistics: "You are building in logistics or transport. Reliability is your entire product.",
   food: "You are building a food business. Repeat customers are everything here.",
@@ -556,7 +556,7 @@ const UNDERSTAND = {
   tech: "You are building a tech product. Real user signal beats clean code every time.",
   general: "You are building something. Talk to real people, move real money, fix one thing at a time.",
 };
-
+ 
 function getAnalysis(idea: string) {
   const domain = getDomain(idea);
   const stage = getStage(idea);
@@ -567,33 +567,77 @@ function getAnalysis(idea: string) {
   const stuck = domainSteps.stuck || STEPS.general.stuck;
   return { understanding, bottleneck, steps: stageSteps, stuck, domain, stage };
 }
-
+ 
 // ─────────────────────────────────────────────────────────────
 // LOCAL STORAGE
 // ─────────────────────────────────────────────────────────────
-
+ 
 const KEY = "mm_exec_v1";
 const load = () => { try { const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : null; } catch { return null; } };
 const save = (d) => { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch {} };
 const clear = () => { try { localStorage.removeItem(KEY); } catch {} };
-
+ 
 // ─────────────────────────────────────────────────────────────
 // APP
 // ─────────────────────────────────────────────────────────────
-
+ 
+// ─────────────────────────────────────────────────────────────
+// BEHAVIOR MEMORY
+// ─────────────────────────────────────────────────────────────
+ 
+const KEY = "mm_exec_v2";
+const BEH_KEY = "mm_behavior_v1";
+ 
+const load = () => { try { const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : null; } catch { return null; } };
+const save = (d: object) => { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch {} };
+const clear = () => { try { localStorage.removeItem(KEY); } catch {} };
+ 
+interface UserBehavior {
+  stuckCount: number;
+  completedSteps: number;
+  avoidedActions: string[];
+  avgCompletionTime: number;
+  lastActionTime: number;
+  realitySlapped: boolean;
+}
+ 
+const loadBehavior = (): UserBehavior => {
+  try {
+    const r = localStorage.getItem(BEH_KEY);
+    return r ? JSON.parse(r) : { stuckCount: 0, completedSteps: 0, avoidedActions: [], avgCompletionTime: 0, lastActionTime: Date.now(), realitySlapped: false };
+  } catch { return { stuckCount: 0, completedSteps: 0, avoidedActions: [], avgCompletionTime: 0, lastActionTime: Date.now(), realitySlapped: false }; }
+};
+ 
+const saveBehavior = (b: UserBehavior) => { try { localStorage.setItem(BEH_KEY, JSON.stringify(b)); } catch {} };
+ 
+// ─────────────────────────────────────────────────────────────
+// APP
+// ─────────────────────────────────────────────────────────────
+ 
 export default function MicroMind() {
-  const [view, setView] = useState("input");   // input | exec | thinking
+  const [view, setView] = useState("input");
   const [idea, setIdea] = useState("");
-  const [analysis, setAnalysis] = useState(null);
+  const [analysis, setAnalysis] = useState<{
+    understanding: string;
+    bottleneck: string;
+    steps: string[];
+    stuck: string | null;
+    domain: string;
+    stage: string;
+  } | null>(null);
   const [stepIdx, setStepIdx] = useState(0);
-  const [completed, setCompleted] = useState([]);
+  const [completed, setCompleted] = useState<string[]>([]);
   const [isStuck, setIsStuck] = useState(false);
+  const [isMicro, setIsMicro] = useState(false);
   const [animOut, setAnimOut] = useState(false);
-  const [apiError, setApiError] = useState(null);
+  const [apiError, setApiError] = useState<string | null>(null);
   const [stuckLoading, setStuckLoading] = useState(false);
-  const textRef = useRef(null);
-
-  // Restore session
+  const [behavior, setBehavior] = useState<UserBehavior>(loadBehavior());
+  const [realitySlap, setRealitySlap] = useState(false);
+  const [stepStartTime, setStepStartTime] = useState(Date.now());
+  const textRef = useRef<HTMLTextAreaElement>(null);
+ 
+  // Boot: restore session
   useEffect(() => {
     const s = load();
     if (s?.analysis && s?.view === "exec") {
@@ -603,163 +647,233 @@ export default function MicroMind() {
       setCompleted(s.completed || []);
       setView("exec");
     }
+    setBehavior(loadBehavior());
   }, []);
-
+ 
   // Persist
   useEffect(() => {
     if (analysis && view === "exec") {
       save({ idea, analysis, stepIdx, completed, view });
     }
   }, [idea, analysis, stepIdx, completed, view]);
-
-  async function start() {
-    if (idea.trim().length < 8) return;
-    setView("thinking");
-    setApiError(null);
+ 
+  // Update behavior helper
+  function updateBehavior(updates: Partial<UserBehavior>) {
+    setBehavior(prev => {
+      const next = { ...prev, ...updates };
+      saveBehavior(next);
+      return next;
+    });
+  }
+ 
+  // ── HYBRID API CALL ──────────────────────────────────────────
+  // Tries API first. Falls back to internal engine if API fails or is vague.
+  async function callAnalyzeAPI(ideaText: string): Promise<{ understanding: string; bottleneck: string; nextStep: string } | null> {
     try {
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idea: idea.trim() }),
+        body: JSON.stringify({ idea: ideaText }),
       });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || "Something went wrong. Try again.");
-      }
-      const data = await res.json();
-      // data = { understanding, bottleneck, nextStep }
-      // Wrap into the shape the rest of the app expects
+      if (!res.ok) return null;
+      const data = await res.json() as { understanding: string; bottleneck: string; nextStep: string };
+      // Validate response is not vague (under 15 chars = vague)
+      if (!data.nextStep || data.nextStep.length < 15) return null;
+      return data;
+    } catch { return null; }
+  }
+ 
+  // Hybrid: try API, fall back to internal engine
+  async function getNextStep(ideaText: string): Promise<{ understanding: string; bottleneck: string; nextStep: string }> {
+    const apiResult = await callAnalyzeAPI(ideaText);
+    if (apiResult) return apiResult;
+    // Fallback to internal engine
+    const domain = getDomain(ideaText);
+    const stage = getStage(ideaText);
+    const domainSteps = STEPS[domain as keyof typeof STEPS] || STEPS.general;
+    const stageSteps = (domainSteps as Record<string, string[]>)[stage] || (domainSteps as Record<string, string[]>).validate;
+    const fallbackStep = stageSteps[Math.floor(Math.random() * stageSteps.length)];
+    const bottleneckMap = BOTTLENECKS[stage as keyof typeof BOTTLENECKS] || BOTTLENECKS.validate;
+    return {
+      understanding: UNDERSTAND[domain as keyof typeof UNDERSTAND] || UNDERSTAND.general,
+      bottleneck: (bottleneckMap as Record<string, string>)[domain] || (bottleneckMap as Record<string, string>).general || "",
+      nextStep: fallbackStep,
+    };
+  }
+ 
+  async function start() {
+    if (idea.trim().length < 8) return;
+    setView("thinking");
+    setApiError(null);
+    setRealitySlap(false);
+    try {
+      const data = await getNextStep(idea.trim());
       const a = {
         understanding: data.understanding,
-        bottleneck:    data.bottleneck,
-        steps:         [data.nextStep],   // single AI-generated step
-        stuck:         null,              // fetched on-demand (see goStuck)
-        domain:        "ai",
-        stage:         "ai",
+        bottleneck: data.bottleneck,
+        steps: [data.nextStep],
+        stuck: null,
+        domain: getDomain(idea),
+        stage: getStage(idea),
       };
       setAnalysis(a);
       setStepIdx(0);
       setCompleted([]);
       setIsStuck(false);
+      setIsMicro(false);
+      setStepStartTime(Date.now());
       setView("exec");
     } catch (err) {
-      setApiError(err instanceof Error ? err.message : "Could not connect. Check your connection.");
+      setApiError(err instanceof Error ? err.message : "Could not connect. Try again.");
       setView("input");
     }
   }
-
+ 
   async function markDone() {
-    const step = isStuck ? analysis.stuck : (analysis.steps[stepIdx] || analysis.steps[0]);
+    if (!analysis) return;
+    const step = isStuck ? (analysis.stuck || analysis.steps[0]) : (analysis.steps[stepIdx] || analysis.steps[0]);
+ 
+    // Track completion time for behavior memory
+    const timeTaken = Math.round((Date.now() - stepStartTime) / 1000);
+    const newCompleted = behavior.completedSteps + 1;
+    const newAvg = Math.round((behavior.avgCompletionTime * behavior.completedSteps + timeTaken) / newCompleted);
+    updateBehavior({
+      completedSteps: newCompleted,
+      avgCompletionTime: newAvg,
+      lastActionTime: Date.now(),
+      stuckCount: 0, // reset stuck count on completion
+      realitySlapped: false,
+    });
+ 
     setAnimOut(true);
-    const newCompleted = [...completed, step];
-    setCompleted(newCompleted);
+    const newCompleted2 = [...completed, step];
+    setCompleted(newCompleted2);
     setIsStuck(false);
-
+    setIsMicro(false);
+    setRealitySlap(false);
+ 
+    // Get next step via hybrid engine
     try {
-      // Ask AI for the next step given what has been done
-      const completedContext = newCompleted.length > 0
-        ? ` I have already done: ${newCompleted.slice(-2).join(". ")}.`
+      const completedContext = newCompleted2.length > 0
+        ? ` I already did: ${newCompleted2.slice(-2).join(". ")}.`
         : "";
-      const res = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idea: idea + completedContext }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setAnalysis(prev => ({
-          ...prev,
-          understanding: data.understanding,
-          bottleneck: data.bottleneck,
-          steps: [data.nextStep],
-          stuck: null,
-        }));
-        setStepIdx(0);
-      }
-    } catch {
-      // Fallback: if API fails, just clear the step so user sees a reload prompt
-      setAnalysis(prev => ({
+      const data = await getNextStep(idea + completedContext);
+      setAnalysis(prev => prev ? ({
         ...prev,
-        steps: ["Refresh the page to get your next step."],
+        understanding: data.understanding,
+        bottleneck: data.bottleneck,
+        steps: [data.nextStep],
         stuck: null,
-      }));
+      }) : prev);
+      setStepIdx(0);
+    } catch {
+      setAnalysis(prev => prev ? ({
+        ...prev,
+        steps: ["Refresh to get your next step."],
+        stuck: null,
+      }) : prev);
       setStepIdx(0);
     }
-
-    setTimeout(() => { setAnimOut(false); }, 220);
+    setStepStartTime(Date.now());
+    setTimeout(() => setAnimOut(false), 220);
   }
-
+ 
   async function goStuck() {
-    if (isStuck || stuckLoading) return;
+    if (stuckLoading || !analysis) return;
+ 
+    const newStuckCount = behavior.stuckCount + 1;
+    updateBehavior({ stuckCount: newStuckCount, avoidedActions: [...behavior.avoidedActions, analysis.steps[stepIdx] || ""] });
+ 
+    // REALITY SLAP — after 3 stuck clicks
+    if (newStuckCount >= 3 && !behavior.realitySlapped) {
+      updateBehavior({ realitySlapped: true });
+      setRealitySlap(true);
+      return;
+    }
+ 
     setStuckLoading(true);
     setAnimOut(true);
+    setIsMicro(true);
+ 
     try {
-      // Ask AI for a simpler version of the current situation
-      const stuckIdea = idea + " — I am stuck and need a smaller, simpler first action that takes under 5 minutes.";
-      const res = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idea: stuckIdea }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        // Inject stuck step into analysis
-        setAnalysis(prev => ({ ...prev, stuck: data.nextStep }));
-      }
+      const currentStep = analysis.steps[stepIdx] || analysis.steps[0];
+      // Ask for MICRO version — under 2 minutes, zero thinking
+      const microIdea = idea + ` My current step is: "${currentStep}". I am stuck. Give me a micro version that takes under 2 minutes, requires zero thinking, and is physically actionable right now. Make it stupidly simple.`;
+      const data = await getNextStep(microIdea);
+      // Also try to simplify using internal engine as backup
+      const microStep = data.nextStep.length > 15 ? data.nextStep : (() => {
+        const domain = getDomain(idea);
+        const stuckStepData = STEPS[domain as keyof typeof STEPS] || STEPS.general;
+        return (stuckStepData as Record<string, string>).stuck || "Pick up your phone. Send one message to one person. Just one.";
+      })();
+      setAnalysis(prev => prev ? ({ ...prev, stuck: microStep }) : prev);
     } catch {
-      // Fallback to generic stuck step if API fails
-      setAnalysis(prev => ({
-        ...prev,
-        stuck: "Pick up your phone. Call or message one real person connected to this. Have a 5-minute conversation right now.",
-      }));
+      const domain = getDomain(idea);
+      const stuckData = STEPS[domain as keyof typeof STEPS] || STEPS.general;
+      const fallbackStuck = (stuckData as Record<string, string>).stuck || "Pick up your phone. Send one message right now.";
+      setAnalysis(prev => prev ? ({ ...prev, stuck: fallbackStuck }) : prev);
     }
-    setTimeout(() => { setIsStuck(true); setStuckLoading(false); setAnimOut(false); }, 220);
+ 
+    setIsStuck(true);
+    setTimeout(() => { setStuckLoading(false); setAnimOut(false); }, 220);
+    setStepStartTime(Date.now());
   }
-
+ 
+  function dismissRealitySlap() {
+    setRealitySlap(false);
+    goStuck();
+  }
+ 
   function reset() {
     clear();
     setIdea(""); setAnalysis(null);
     setStepIdx(0); setCompleted([]);
-    setIsStuck(false); setView("input");
+    setIsStuck(false); setIsMicro(false);
+    setView("input"); setApiError(null);
+    setRealitySlap(false);
   }
-
+ 
   const currentStep = analysis
-    ? isStuck ? analysis.stuck : (analysis.steps[stepIdx] || analysis.steps[0])
+    ? isStuck && analysis.stuck ? analysis.stuck : (analysis.steps[stepIdx] || analysis.steps[0])
     : "";
-
+ 
   const words = idea.trim().split(/\s+/).filter(Boolean).length;
-  const canStart = words >= 5;
-
+  const canStart = words >= 3;
+ 
+  // Adaptive step difficulty based on behavior
+  const isHighStuck = behavior.stuckCount >= 2;
+ 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+ 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
         :root {
-          --bg:    #07060D;
-          --s1:    #0E0C1A;
-          --s2:    #131128;
-          --b1:    #1C1A2E;
-          --b2:    #252240;
-          --p:     #5B47E0;
-          --ph:    #7B6EF5;
-          --tx:    #E8E4F8;
-          --tx2:   #9592B8;
-          --tx3:   #4E4B6A;
-          --g:     #1EC47A;
-          --gbg:   rgba(30,196,122,.09);
-          --gbd:   rgba(30,196,122,.22);
-          --a:     #EFA020;
-          --abg:   rgba(239,160,32,.09);
-          --abd:   rgba(239,160,32,.22);
-          --r:     #E04848;
-          --rbg:   rgba(224,72,72,.07);
-          --serif: 'Instrument Serif', Georgia, serif;
-          --sans:  'DM Sans', system-ui, sans-serif;
+          --bg:       #F8F9FB;
+          --white:    #FFFFFF;
+          --border:   #E2E5EA;
+          --border2:  #CDD1D8;
+          --p:        #4F46E5;
+          --p-hover:  #4338CA;
+          --p-light:  #EEF2FF;
+          --tx:       #0F1117;
+          --tx2:      #4B5263;
+          --tx3:      #8B92A0;
+          --green:    #059669;
+          --green-bg: #ECFDF5;
+          --green-bd: #6EE7B7;
+          --amber:    #D97706;
+          --amber-bg: #FFFBEB;
+          --amber-bd: #FCD34D;
+          --red:      #DC2626;
+          --red-bg:   #FEF2F2;
+          --red-bd:   #FCA5A5;
+          --sans:     'Inter', system-ui, sans-serif;
+          --serif:    'Instrument Serif', Georgia, serif;
         }
-
+ 
         body {
           background: var(--bg);
           color: var(--tx);
@@ -767,692 +881,411 @@ export default function MicroMind() {
           min-height: 100vh;
           -webkit-font-smoothing: antialiased;
         }
-
+ 
         .shell {
           min-height: 100vh;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 24px 16px 40px;
+          padding: 24px 16px 60px;
         }
-
-        /* ambient glow */
-        .shell::before {
-          content: '';
-          position: fixed;
-          top: -20%;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 600px;
-          height: 440px;
-          background: radial-gradient(ellipse, rgba(91,71,224,.07) 0%, transparent 65%);
-          pointer-events: none;
-          z-index: 0;
-        }
-
-        .page {
-          width: 100%;
-          max-width: 520px;
-          position: relative;
-          z-index: 1;
-        }
-
-        /* ── NAV ── */
+ 
+        .page { width: 100%; max-width: 480px; }
+ 
+        /* NAV */
         .nav {
           position: fixed;
           top: 0; left: 0; right: 0;
-          z-index: 20;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 14px 20px;
+          padding: 14px 24px;
+          background: var(--white);
+          border-bottom: 1px solid var(--border);
+          z-index: 20;
         }
-
-        .nav.raised {
-          background: rgba(7,6,13,.92);
-          backdrop-filter: blur(12px);
-          border-bottom: 1px solid var(--b1);
-        }
-
-        .brand {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
+ 
+        .nav.focus-mode { display: none; }
+ 
+        .brand { display: flex; align-items: center; gap: 8px; }
+ 
         .brand-mark {
-          width: 24px;
-          height: 24px;
+          width: 26px; height: 26px;
           background: var(--p);
-          border-radius: 6px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-family: var(--serif);
-          font-size: 12px;
-          color: #fff;
-        }
-
-        .brand-name {
-          font-size: 13px;
-          font-weight: 500;
-          color: var(--tx2);
-        }
-
-        .nav-reset {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          padding: 5px 11px;
-          background: transparent;
-          border: 1px solid var(--b2);
           border-radius: 7px;
-          color: var(--tx3);
-          font-size: 11px;
-          font-family: var(--sans);
-          cursor: pointer;
-          transition: all .15s;
+          display: flex; align-items: center; justify-content: center;
+          font-family: var(--serif);
+          font-size: 13px; color: #fff; font-style: italic;
         }
-
-        .nav-reset:hover { color: var(--tx2); background: var(--s1); }
-
-        /* ── ANIMATIONS ── */
-        @keyframes up {
-          from { opacity: 0; transform: translateY(12px); }
-          to   { opacity: 1; transform: translateY(0); }
+ 
+        .brand-name { font-size: 14px; font-weight: 600; color: var(--tx); letter-spacing: -.3px; }
+ 
+        .nav-btn {
+          font-size: 12px; font-weight: 500; color: var(--tx3);
+          background: none; border: 1px solid var(--border); border-radius: 7px;
+          padding: 5px 12px; cursor: pointer; font-family: var(--sans); transition: all .15s;
         }
-        @keyframes in {
-          from { opacity: 0; transform: translateY(7px) scale(.99); }
-          to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50%       { opacity: .15; }
-        }
-
-        .u0 { animation: up .34s ease forwards; }
-        .u1 { animation: up .34s .06s ease both; }
-        .u2 { animation: up .34s .12s ease both; }
-        .u3 { animation: up .34s .18s ease both; }
-        .u4 { animation: up .34s .24s ease both; }
-        .u5 { animation: up .34s .30s ease both; }
-        .step-in  { animation: in .26s ease forwards; }
-        .step-out { opacity: 0; transform: translateY(-7px); transition: all .2s; }
-
-        /* ── INPUT VIEW ── */
-        .input-view {
-          text-align: center;
-          padding-top: 48px;
-        }
-
-        .tag-line {
-          display: inline-block;
-          font-size: 11px;
-          letter-spacing: .06em;
-          text-transform: uppercase;
-          color: var(--tx3);
-          margin-bottom: 20px;
-          font-weight: 500;
-        }
-
+        .nav-btn:hover { color: var(--tx); border-color: var(--border2); }
+ 
+        /* ANIMATIONS */
+        @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+        @keyframes blink  { 0%,100% { opacity:1; } 50% { opacity:.3; } }
+        @keyframes stepIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes slap   { 0%,100% { transform:translateX(0); } 20%,60% { transform:translateX(-4px); } 40%,80% { transform:translateX(4px); } }
+ 
+        .u0 { animation: fadeUp .32s ease forwards; }
+        .u1 { animation: fadeUp .32s .05s ease both; }
+        .u2 { animation: fadeUp .32s .10s ease both; }
+        .u3 { animation: fadeUp .32s .15s ease both; }
+        .u4 { animation: fadeUp .32s .20s ease both; }
+        .step-in  { animation: stepIn .25s ease forwards; }
+        .step-out { opacity:0; transform:translateY(-5px); transition: all .18s; }
+ 
+        /* INPUT VIEW */
+        .input-view { text-align: center; padding-top: 60px; }
+ 
         .headline {
           font-family: var(--serif);
-          font-size: clamp(28px, 6vw, 44px);
-          font-weight: 400;
-          line-height: 1.1;
-          letter-spacing: -.5px;
-          color: var(--tx);
-          margin-bottom: 8px;
+          font-size: clamp(30px, 7vw, 44px);
+          font-weight: 400; line-height: 1.15;
+          letter-spacing: -.5px; color: var(--tx); margin-bottom: 10px;
         }
-
-        .headline em { font-style: italic; color: var(--ph); }
-
-        .sub {
-          font-size: 13px;
-          color: var(--tx3);
-          font-weight: 300;
-          margin-bottom: 28px;
-          line-height: 1.5;
-        }
-
+        .headline em { font-style: italic; color: var(--p); }
+ 
+        .subtext { font-size: 15px; color: var(--tx2); font-weight: 400; margin-bottom: 32px; line-height: 1.5; }
+ 
         .input-wrap { position: relative; margin-bottom: 10px; }
-
+ 
         .idea-input {
-          width: 100%;
-          min-height: 96px;
-          padding: 14px 15px;
-          background: var(--s1);
-          border: 1.5px solid var(--b1);
-          border-radius: 12px;
-          color: var(--tx);
-          font-family: var(--sans);
-          font-size: 14px;
-          font-weight: 300;
-          line-height: 1.6;
-          resize: none;
-          outline: none;
-          caret-color: var(--ph);
+          width: 100%; min-height: 100px; padding: 16px;
+          background: var(--white); border: 2px solid var(--border2); border-radius: 12px;
+          color: var(--tx); font-family: var(--sans); font-size: 15px; font-weight: 400;
+          line-height: 1.6; resize: none; outline: none; caret-color: var(--p);
           transition: border-color .15s, box-shadow .15s;
         }
-
         .idea-input::placeholder { color: var(--tx3); }
-        .idea-input:focus {
-          border-color: rgba(91,71,224,.4);
-          box-shadow: 0 0 0 3px rgba(91,71,224,.1);
-        }
-
-        .word-count {
-          position: absolute;
-          bottom: 9px; right: 12px;
-          font-size: 10px;
-          color: var(--tx3);
-          pointer-events: none;
-        }
-
+        .idea-input:focus { border-color: var(--p); box-shadow: 0 0 0 3px rgba(79,70,229,.1); }
+ 
+        .word-count { position: absolute; bottom:10px; right:13px; font-size:11px; color:var(--tx3); pointer-events:none; }
+ 
         .go-btn {
-          width: 100%;
-          padding: 13px 18px;
-          background: var(--p);
-          border: none;
-          border-radius: 11px;
-          color: #fff;
-          font-family: var(--sans);
-          font-size: 14px;
-          font-weight: 500;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          transition: all .15s;
+          width: 100%; padding: 14px 20px; background: var(--p); border: none; border-radius: 12px;
+          color: #fff; font-family: var(--sans); font-size: 15px; font-weight: 600;
+          cursor: pointer; letter-spacing: -.1px; transition: all .15s;
         }
-
-        .go-btn:hover:not(:disabled) {
-          background: #6B58EE;
-          transform: translateY(-1px);
-          box-shadow: 0 5px 16px rgba(91,71,224,.25);
+        .go-btn:hover:not(:disabled) { background: var(--p-hover); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(79,70,229,.28); }
+        .go-btn:disabled { opacity: .35; cursor: not-allowed; }
+ 
+        .micro-text { margin-top: 12px; font-size: 12px; color: var(--tx3); text-align: center; }
+        .micro-text span { display: block; margin-top: 2px; font-size: 11px; opacity: .7; }
+        .error-text { margin-top: 10px; font-size: 12px; color: var(--red); text-align: center; }
+ 
+        /* BEHAVIOR INDICATOR */
+        .behavior-bar {
+          display: flex; align-items: center; gap: 8px;
+          padding: 8px 12px; background: var(--white); border: 1px solid var(--border);
+          border-radius: 8px; margin-bottom: 10px; font-size: 11px; color: var(--tx3);
         }
-
-        .go-btn:disabled { opacity: .2; cursor: not-allowed; }
-
-        .hint { margin-top: 10px; font-size: 11px; color: var(--tx3); }
-
-        /* ── THINKING VIEW ── */
+        .beh-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+        .beh-dot.warn { background: var(--amber); }
+        .beh-dot.alert { background: var(--red); animation: blink 1s ease infinite; }
+ 
+        /* THINKING */
         .thinking-view {
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 14px;
+          text-align: center; display: flex; flex-direction: column;
+          align-items: center; gap: 14px; padding-top: 60px;
         }
-
-        .dots {
-          display: flex;
-          gap: 6px;
+        .dots { display: flex; gap: 5px; }
+        .dot { width: 6px; height: 6px; background: var(--p); border-radius: 50%; animation: blink 1s ease infinite; }
+        .dot:nth-child(2) { animation-delay: .16s; }
+        .dot:nth-child(3) { animation-delay: .32s; }
+        .thinking-label { font-size: 15px; color: var(--tx2); font-weight: 500; }
+ 
+        /* EXEC VIEW */
+        .exec-view { padding-top: 72px; }
+        .focus-exec { padding-top: 24px; }
+ 
+        .ctx-bar {
+          background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+          padding: 10px 14px; margin-bottom: 12px;
+          display: flex; align-items: center; justify-content: space-between; gap: 12px;
         }
-
-        .dot {
-          width: 6px; height: 6px;
-          background: var(--p);
-          border-radius: 50%;
-          animation: blink 1.1s ease infinite;
+        .ctx-idea { font-size: 12px; color: var(--tx3); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ctx-tag { font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--p); flex-shrink: 0; }
+ 
+        .info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+        .info-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+        .info-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--tx3); margin-bottom: 4px; }
+        .info-text { font-size: 12px; color: var(--tx2); line-height: 1.5; }
+        .info-card.block { border-color: #FCD34D; background: var(--amber-bg); }
+        .info-card.block .info-label { color: var(--amber); }
+        .info-card.block .info-text  { color: #92400E; }
+ 
+        /* STEP CARD */
+        .step-wrap {
+          background: var(--white); border: 1.5px solid var(--border); border-radius: 14px;
+          padding: 28px 24px 22px; margin-bottom: 12px; text-align: center; position: relative;
         }
-
-        .dot:nth-child(2) { animation-delay: .17s; }
-        .dot:nth-child(3) { animation-delay: .34s; }
-
-        .thinking-label { font-size: 13px; color: var(--tx2); font-weight: 300; }
-
-        .thinking-idea {
-          font-family: var(--serif);
-          font-style: italic;
-          font-size: 16px;
-          color: var(--tx3);
-          max-width: 300px;
-          line-height: 1.45;
+        .step-wrap::before {
+          content: ''; position: absolute; top: 0; left: 24px; right: 24px;
+          height: 3px; background: var(--p); border-radius: 0 0 3px 3px;
         }
-
-        /* ── EXEC VIEW ── */
-        .exec-view { padding-top: 62px; }
-
-        /* Context strip */
-        .context-strip {
-          background: var(--s1);
-          border: 1px solid var(--b1);
-          border-radius: 10px;
-          padding: 10px 14px;
-          margin-bottom: 12px;
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          gap: 12px;
+        .step-wrap.stuck-mode::before { background: var(--amber); }
+        .step-wrap.stuck-mode { border-color: var(--amber-bd); background: var(--amber-bg); }
+        .step-wrap.micro-mode::before { background: var(--green); }
+        .step-wrap.micro-mode { border-color: var(--green-bd); }
+ 
+        .step-label {
+          font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+          color: var(--p); margin-bottom: 14px;
+          display: flex; align-items: center; justify-content: center; gap: 6px;
         }
-
-        .context-idea {
-          font-size: 12px;
-          color: var(--tx3);
-          line-height: 1.45;
-          font-weight: 300;
-          flex: 1;
-        }
-
-        .domain-tag {
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: .08em;
-          text-transform: uppercase;
-          color: var(--ph);
-          white-space: nowrap;
-          flex-shrink: 0;
-          margin-top: 1px;
-        }
-
-        /* Analysis row */
-        .analysis-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 8px;
-          margin-bottom: 12px;
-        }
-
-        .analysis-card {
-          background: var(--s1);
-          border: 1px solid var(--b1);
-          border-radius: 10px;
-          padding: 10px 12px;
-        }
-
-        .card-label {
-          font-size: 9px;
-          text-transform: uppercase;
-          letter-spacing: .14em;
-          color: var(--tx3);
-          font-weight: 700;
-          margin-bottom: 4px;
-        }
-
-        .card-text {
-          font-size: 11px;
-          color: var(--tx2);
-          line-height: 1.5;
-          font-weight: 300;
-        }
-
-        .analysis-card.block {
-          border-color: rgba(239,160,32,.18);
-          background: rgba(239,160,32,.06);
-        }
-
-        .analysis-card.block .card-label { color: var(--a); }
-        .analysis-card.block .card-text  { color: #A87010; }
-
-        /* Step card */
-        .step-card {
-          background: var(--s2);
-          border: 1.5px solid var(--b2);
-          border-radius: 14px;
-          padding: 20px 20px 16px;
-          margin-bottom: 10px;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .step-card::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 2px;
-          background: linear-gradient(90deg, var(--p), transparent);
-        }
-
-        .step-card.stuck-mode::before {
-          background: linear-gradient(90deg, var(--a), transparent);
-        }
-
-        .step-card.stuck-mode { border-color: rgba(239,160,32,.2); }
-
-        .step-header {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin-bottom: 9px;
-        }
-
-        .step-badge {
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: .1em;
-          text-transform: uppercase;
-          color: var(--ph);
-          background: rgba(91,71,224,.12);
-          border: 1px solid rgba(91,71,224,.16);
-          padding: 3px 8px;
-          border-radius: 100px;
-        }
-
-        .step-badge.stuck-badge {
-          color: var(--a);
-          background: var(--abg);
-          border-color: var(--abd);
-        }
-
-        .done-count { font-size: 10px; color: var(--tx3); }
-
-        /* Urgency line */
-        .urgency {
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: .08em;
-          text-transform: uppercase;
-          color: var(--r);
-          margin-bottom: 9px;
-          display: flex;
-          align-items: center;
-          gap: 4px;
-        }
-
-        .urgency-dot {
-          width: 4px; height: 4px;
-          background: var(--r);
-          border-radius: 50%;
-          animation: blink 1.3s ease infinite;
-        }
-
-        /* The step itself */
+        .step-label.stuck-label { color: var(--amber); }
+        .step-label.micro-label { color: var(--green); }
+        .step-dot { width: 5px; height: 5px; background: currentColor; border-radius: 50%; animation: blink 1.4s ease infinite; }
+ 
         .step-text {
           font-family: var(--serif);
-          font-size: clamp(17px, 2.8vw, 21px);
-          line-height: 1.5;
-          color: var(--tx);
-          letter-spacing: -.1px;
+          font-size: clamp(20px, 4vw, 26px);
+          line-height: 1.45; color: var(--tx); letter-spacing: -.2px; margin-bottom: 16px;
         }
-
-        .skip-warning {
-          margin-top: 10px;
-          padding-top: 9px;
-          border-top: 1px solid var(--b1);
-          font-size: 10px;
-          color: var(--tx3);
-          font-style: italic;
-        }
-
-        /* Action buttons */
-        .action-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 8px;
-          margin-bottom: 12px;
-        }
-
+ 
+        .step-footer { font-size: 11px; color: var(--tx3); font-style: italic; }
+ 
+        /* BUTTONS */
+        .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+ 
         .btn-done {
-          padding: 12px 14px;
-          background: var(--gbg);
-          border: 1.5px solid var(--gbd);
-          border-radius: 10px;
-          color: var(--g);
-          font-family: var(--sans);
-          font-size: 12px;
-          font-weight: 500;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 6px;
-          transition: all .15s;
+          padding: 13px 16px; background: var(--green-bg); border: 1.5px solid var(--green-bd);
+          border-radius: 10px; color: var(--green); font-family: var(--sans);
+          font-size: 13px; font-weight: 600; cursor: pointer;
+          display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .15s;
         }
-
-        .btn-done:hover {
-          background: rgba(30,196,122,.14);
-          transform: translateY(-1px);
-        }
-
+        .btn-done:hover { background: #D1FAE5; transform: translateY(-1px); }
+ 
         .btn-stuck {
-          padding: 12px 14px;
-          background: var(--abg);
-          border: 1.5px solid var(--abd);
-          border-radius: 10px;
-          color: var(--a);
-          font-family: var(--sans);
-          font-size: 12px;
-          font-weight: 500;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 6px;
-          transition: all .15s;
+          padding: 13px 16px; background: var(--amber-bg); border: 1.5px solid var(--amber-bd);
+          border-radius: 10px; color: var(--amber); font-family: var(--sans);
+          font-size: 13px; font-weight: 600; cursor: pointer;
+          display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .15s;
         }
-
-        .btn-stuck:hover:not(:disabled) {
-          background: rgba(239,160,32,.14);
-          transform: translateY(-1px);
+        .btn-stuck:hover:not(:disabled) { background: #FEF3C7; transform: translateY(-1px); }
+        .btn-stuck:disabled { opacity: .4; cursor: not-allowed; }
+ 
+        /* REALITY SLAP */
+        .reality-slap {
+          background: var(--tx); border-radius: 14px; padding: 28px 24px; text-align: center;
+          margin-bottom: 12px; animation: slap .4s ease;
         }
-
-        .btn-stuck:disabled { opacity: .25; cursor: not-allowed; }
-
-        /* Completed list */
-        .completed-section { margin-top: 4px; }
-
-        .completed-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 6px;
+        .slap-headline {
+          font-family: var(--serif); font-size: 22px; color: #fff;
+          line-height: 1.35; margin-bottom: 10px;
         }
-
-        .completed-label {
-          font-size: 9px;
-          text-transform: uppercase;
-          letter-spacing: .12em;
-          color: var(--tx3);
-          font-weight: 700;
+        .slap-sub { font-size: 13px; color: rgba(255,255,255,.6); margin-bottom: 20px; line-height: 1.5; }
+        .slap-btn {
+          width: 100%; padding: 13px; background: var(--red); border: none; border-radius: 10px;
+          color: #fff; font-family: var(--sans); font-size: 14px; font-weight: 600;
+          cursor: pointer; transition: all .15s;
         }
-
-        .completed-count { font-size: 10px; color: var(--tx3); }
-
-        .completed-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 8px;
-          padding: 7px 10px;
-          background: var(--s1);
-          border: 1px solid var(--b1);
-          border-radius: 8px;
-          margin-bottom: 4px;
-          animation: up .2s ease;
+        .slap-btn:hover { background: #B91C1C; }
+ 
+        /* MICRO MODE BADGE */
+        .micro-badge {
+          display: inline-flex; align-items: center; gap: 5px;
+          background: var(--green-bg); border: 1px solid var(--green-bd);
+          border-radius: 100px; padding: 3px 10px;
+          font-size: 10px; font-weight: 700; color: var(--green);
+          letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px;
         }
-
-        .completed-dot {
-          width: 5px; height: 5px;
-          background: rgba(30,196,122,.5);
-          border-radius: 50%;
-          flex-shrink: 0;
-          margin-top: 5px;
+ 
+        /* COMPLETED */
+        .done-section { margin-top: 4px; }
+        .done-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .done-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--tx3); }
+        .done-count { font-size: 11px; color: var(--tx3); }
+ 
+        .done-item {
+          display: flex; align-items: flex-start; gap: 8px;
+          padding: 8px 12px; background: var(--white); border: 1px solid var(--border);
+          border-radius: 8px; margin-bottom: 5px; animation: fadeIn .2s ease;
         }
-
-        .completed-text {
-          font-size: 11px;
-          color: var(--tx3);
-          line-height: 1.4;
-          font-weight: 300;
-          text-decoration: line-through;
-          text-decoration-color: var(--b2);
-          opacity: .5;
-        }
-
-        /* SVG icons */
-        svg { flex-shrink: 0; }
-
-        @media (max-width: 460px) {
-          .analysis-row { grid-template-columns: 1fr; }
-          .headline { font-size: 26px; }
-          .step-text { font-size: 17px; }
+        .done-dot { width: 5px; height: 5px; background: var(--green); border-radius: 50%; flex-shrink: 0; margin-top: 5px; opacity: .6; }
+        .done-text { font-size: 12px; color: var(--tx3); line-height: 1.45; text-decoration: line-through; text-decoration-color: var(--border2); opacity: .6; }
+ 
+        @media (max-width: 480px) {
+          .info-row { grid-template-columns: 1fr; }
+          .step-text { font-size: 20px; }
+          .headline  { font-size: 28px; }
         }
       `}</style>
-
+ 
       <div className="shell">
-
-        {/* NAV */}
-        <nav className={`nav ${view === "exec" ? "raised" : ""}`}>
+ 
+        {/* NAV — hidden in focus mode during execution */}
+        <nav className={`nav ${view === "exec" ? "focus-mode" : ""}`}>
           <div className="brand">
             <div className="brand-mark">M</div>
             <span className="brand-name">MicroMind</span>
           </div>
-          {view === "exec" && (
-            <button className="nav-reset" onClick={reset}>
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/>
-              </svg>
-              New Idea
-            </button>
-          )}
         </nav>
-
+ 
+        {/* Minimal exec nav */}
+        {view === "exec" && (
+          <nav className="nav" style={{display:"flex"}}>
+            <div className="brand">
+              <div className="brand-mark">M</div>
+              <span className="brand-name">MicroMind</span>
+            </div>
+            <button className="nav-btn" onClick={reset}>← New Idea</button>
+          </nav>
+        )}
+ 
         {/* INPUT */}
         {view === "input" && (
           <div className="page input-view">
-            <span className="tag-line u0">Execution Engine</span>
-            <h1 className="headline u1">
-              What are you<br /><em>building right now?</em>
+            <h1 className="headline u0">
+              Stuck? Tell me<br /><em>your idea.</em>
             </h1>
-            <p className="sub u2">
-              Type your idea. Get one step to do immediately.<br />
-              Not advice. Not a plan. One action.
+            <p className="subtext u1">
+              You'll get one clear step. No advice. Just action.
             </p>
-            <div className="input-wrap u3">
+            {behavior.completedSteps > 0 && (
+              <div className="behavior-bar u1">
+                <div className={`beh-dot ${behavior.stuckCount >= 3 ? "alert" : behavior.stuckCount >= 2 ? "warn" : ""}`} />
+                <span>{behavior.completedSteps} real action{behavior.completedSteps !== 1 ? "s" : ""} taken across all sessions</span>
+              </div>
+            )}
+            <div className="input-wrap u2">
               <textarea
                 ref={textRef}
                 className="idea-input"
-                placeholder="I want to expand my transport business all over India... / I am building an AI tool for founders... / I run a tiffin service and need more customers..."
+                placeholder="I want to..."
                 value={idea}
                 onChange={e => setIdea(e.target.value)}
                 onKeyDown={e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey) && canStart) start(); }}
                 rows={4}
               />
-              {idea.length > 0 && (
-                <span className="word-count">{words}w</span>
-              )}
+              {idea.length > 0 && <span className="word-count">{words}w</span>}
             </div>
-            <button className="go-btn u4" onClick={start} disabled={!canStart}>
-              Get My Next Step
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-              </svg>
+            <button className="go-btn u3" onClick={start} disabled={!canStart}>
+              Tell me what to do →
             </button>
-            {!canStart && idea.length > 0 && (
-              <p className="hint u5">Describe your idea in a few more words.</p>
+            {!apiError && (
+              <div className="micro-text u4">
+                Don't overthink. Just start.
+                <span>Takes less than 10 seconds.</span>
+              </div>
             )}
-            {canStart && !apiError && (
-              <p className="hint u5">⌘ + Enter</p>
-            )}
-            {apiError && (
-              <p className="hint u5" style={{color:"var(--r)"}}>⚠ {apiError}</p>
-            )}
+            {apiError && <p className="error-text u4">⚠ {apiError}</p>}
           </div>
         )}
-
+ 
         {/* THINKING */}
         {view === "thinking" && (
           <div className="page thinking-view">
             <div className="dots">
               <div className="dot" /><div className="dot" /><div className="dot" />
             </div>
-            <p className="thinking-label">Reading your idea...</p>
-            <p className="thinking-idea">
-              "{idea.substring(0, 65)}{idea.length > 65 ? "..." : ""}"
-            </p>
+            <p className="thinking-label">Thinking...</p>
           </div>
         )}
-
-        {/* EXECUTION */}
+ 
+        {/* EXEC */}
         {view === "exec" && analysis && (
           <div className="page exec-view">
-
-            {/* What they're building */}
-            <div className="context-strip u0">
-              <div className="context-idea">
-                {idea.length > 80 ? idea.substring(0, 80) + "..." : idea}
-              </div>
-              <div className="domain-tag">
-                {analysis.domain} · {analysis.stage}
-              </div>
-            </div>
-
-            {/* Understanding + Bottleneck */}
-            <div className="analysis-row">
-              <div className="analysis-card u1">
-                <div className="card-label">Situation</div>
-                <div className="card-text">{analysis.understanding}</div>
-              </div>
-              <div className="analysis-card block u2">
-                <div className="card-label">Blocking You</div>
-                <div className="card-text">{analysis.bottleneck}</div>
-              </div>
-            </div>
-
-            {/* Step card */}
-            <div className={`step-card ${isStuck ? "stuck-mode" : ""} ${animOut ? "step-out" : "step-in"} u3`}>
-              <div className="step-header">
-                <span className={`step-badge ${isStuck ? "stuck-badge" : ""}`}>
-                  {isStuck ? "Simpler Step" : "Next Step"}
-                </span>
-                {completed.length > 0 && (
-                  <span className="done-count">{completed.length} done</span>
-                )}
-              </div>
-
-              <div className="urgency">
-                <span className="urgency-dot" />
-                {isStuck ? "Do this in 5 minutes" : "Do this in 10 minutes"}
-              </div>
-
-              <div className="step-text">{currentStep}</div>
-
-              <div className="skip-warning">If you skip this, nothing changes.</div>
-            </div>
-
-            {/* Buttons */}
-            <div className="action-row u4">
-              <button className="btn-done" onClick={markDone}>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-                Done — Next Step
-              </button>
-              <button className="btn-stuck" onClick={goStuck} disabled={isStuck || stuckLoading}>
-                {stuckLoading ? (
-                  <span style={{opacity:.6, fontSize:"11px"}}>...</span>
-                ) : (
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-                  </svg>
-                )}
-                {stuckLoading ? "Getting simpler step..." : "I'm Stuck"}
-              </button>
-            </div>
-
-            {/* Completed */}
-            {completed.length > 0 && (
-              <div className="completed-section u5">
-                <div className="completed-header">
-                  <span className="completed-label">Completed</span>
-                  <span className="completed-count">{completed.length} step{completed.length !== 1 ? "s" : ""}</span>
+ 
+            {/* REALITY SLAP — overrides everything */}
+            {realitySlap ? (
+              <div className="reality-slap u0">
+                <div className="slap-headline">
+                  You're avoiding the hard part.
                 </div>
-                {[...completed].reverse().map((step, i) => (
-                  <div className="completed-item" key={i}>
-                    <div className="completed-dot" />
-                    <div className="completed-text">{step}</div>
-                  </div>
-                ))}
+                <p className="slap-sub">
+                  This is exactly why you're stuck. Every skip brings you closer to giving up on your idea.
+                </p>
+                <button className="slap-btn" onClick={dismissRealitySlap}>
+                  OK. Give me the simplest possible step.
+                </button>
               </div>
+            ) : (
+              <>
+                <div className="ctx-bar u0">
+                  <span className="ctx-idea">{idea.length > 70 ? idea.substring(0, 70) + "..." : idea}</span>
+                  <span className="ctx-tag">{analysis.stage}</span>
+                </div>
+ 
+                <div className="info-row">
+                  <div className="info-card u1">
+                    <div className="info-label">Situation</div>
+                    <div className="info-text">{analysis.understanding.substring(0, 120)}{analysis.understanding.length > 120 ? "..." : ""}</div>
+                  </div>
+                  <div className="info-card block u2">
+                    <div className="info-label">Blocking you</div>
+                    <div className="info-text">{analysis.bottleneck.substring(0, 120)}{analysis.bottleneck.length > 120 ? "..." : ""}</div>
+                  </div>
+                </div>
+ 
+                <div className={`step-wrap ${isMicro ? "micro-mode" : isStuck ? "stuck-mode" : ""} ${animOut ? "step-out" : "step-in"} u3`}>
+                  {isMicro && (
+                    <div style={{textAlign:"center", marginBottom:"8px"}}>
+                      <span className="micro-badge">⚡ Micro Step — under 2 min</span>
+                    </div>
+                  )}
+                  <div className={`step-label ${isMicro ? "micro-label" : isStuck ? "stuck-label" : ""}`}>
+                    <span className="step-dot" />
+                    {isMicro ? "Smallest possible action" : isStuck ? "Simpler step" : "Your next step"}
+                    {completed.length > 0 && (
+                      <span style={{marginLeft:"8px", fontWeight:400, opacity:.6}}>· {completed.length} done</span>
+                    )}
+                  </div>
+                  <div className="step-text">{currentStep}</div>
+                  <div className="step-footer">
+                    {isMicro ? "This takes under 2 minutes. No thinking required." : "If you skip this, nothing changes."}
+                  </div>
+                </div>
+ 
+                <div className="btn-row u4">
+                  <button className="btn-done" onClick={markDone}>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Done — Next Step
+                  </button>
+                  <button className="btn-stuck" onClick={goStuck} disabled={stuckLoading}>
+                    {stuckLoading ? "..." : (
+                      <>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        {isHighStuck ? "Too hard?" : "I'm Stuck"}
+                      </>
+                    )}
+                  </button>
+                </div>
+ 
+                {completed.length > 0 && (
+                  <div className="done-section">
+                    <div className="done-header">
+                      <span className="done-label">Real actions taken</span>
+                      <span className="done-count">{completed.length}</span>
+                    </div>
+                    {[...completed].reverse().map((step, i) => (
+                      <div className="done-item" key={i}>
+                        <div className="done-dot" />
+                        <div className="done-text">{step}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
-
+ 
           </div>
         )}
-
+ 
       </div>
     </>
   );
 }
-
