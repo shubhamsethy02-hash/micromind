@@ -3,9 +3,26 @@
 import { motion } from "framer-motion";
 import { Zap, Target, Brain } from "lucide-react";
 import { useRouter } from "next/navigation"; // ✅ ADDED
+import { useState, useEffect } from "react";
 
 export default function Page() {
   const router = useRouter(); // ✅ ADDED
+  const [particles, setParticles] = useState([]);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    setParticles(
+      Array.from({ length: 40 }, (_, i) => ({
+        id: i,
+        x: Math.random() * 500 - 250,
+        y: Math.random() * 500 - 250,
+        size: Math.random() * 8 + 3,
+        delay: Math.random() * 3
+      }))
+    );
+  }, []);
+
   const features = [
     {
       icon: Zap,
@@ -26,14 +43,6 @@ export default function Page() {
       color: "from-green-500/20 to-emerald-500/20"
     }
   ];
-
-  const particles = Array.from({ length: 40 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 500 - 250,
-    y: Math.random() * 500 - 250,
-    size: Math.random() * 8 + 3,
-    delay: Math.random() * 3
-  }));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#faf9f7] via-[#f5f3f0] to-[#ebe8e3]">

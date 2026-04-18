@@ -571,26 +571,13 @@ function getAnalysis(idea: string) {
 // ─────────────────────────────────────────────────────────────
 // LOCAL STORAGE
 // ─────────────────────────────────────────────────────────────
- 
-const KEY = "mm_exec_v1";
-const load = () => { try { const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : null; } catch { return null; } };
-const save = (d) => { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch {} };
-const clear = () => { try { localStorage.removeItem(KEY); } catch {} };
- 
-// ─────────────────────────────────────────────────────────────
-// APP
-// ─────────────────────────────────────────────────────────────
- 
-// ─────────────────────────────────────────────────────────────
-// BEHAVIOR MEMORY
-// ─────────────────────────────────────────────────────────────
- 
-const KEY = "mm_exec_v2";
+
+const STORAGE_KEY = "mm_exec_v1";
 const BEH_KEY = "mm_behavior_v1";
- 
-const load = () => { try { const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : null; } catch { return null; } };
-const save = (d: object) => { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch {} };
-const clear = () => { try { localStorage.removeItem(KEY); } catch {} };
+
+const load = () => { try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : null; } catch { return null; } };
+const save = (d: object) => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch {} };
+const clear = () => { try { localStorage.removeItem(STORAGE_KEY); } catch {} };
  
 interface UserBehavior {
   stuckCount: number;
